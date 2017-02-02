@@ -1,0 +1,80 @@
+# Greedy
+# 455 Assign Cookies
+
+
+# Slow version
+class Solution(object):
+	def findContentChildren(self, g, s):
+		"""
+		:type g: List[int]
+		:type s: List[int]
+		:rtype: int
+		"""
+		g = sorted(g, reverse = False)
+		s = sorted(s, reverse = False)
+		len_s = len(s)
+		match_count = 0
+		cur = 0
+		for g_t in g:
+			i = 0
+			for i in range(cur, len_s):
+				if s[i] >= g_t:
+					match_count += 1
+					cur = i+1
+					break
+			if i == len_s-1:
+				break
+		return match_count
+
+
+# Fast Version
+class Solution(object):
+	def findContentChildren(self, g, s):
+		"""
+		:type g: List[int]
+		:type s: List[int]
+		:rtype: int
+		"""
+		g = sorted(g, reverse = False)
+		s = sorted(s, reverse = False)
+
+		g_cur = 0
+		s_cur = 0
+
+		g_len = len(g)
+		s_len = len(s)
+
+		matched = 0
+
+		while ( (g_cur<g_len) and (s_cur<s_len) ):
+
+			if g[g_cur] <= s[s_cur]:
+				matched += 1
+				g_cur += 1
+				s_cur += 1
+			else:
+				s_cur += 1
+
+		return matched
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		

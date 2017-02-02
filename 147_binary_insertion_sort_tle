@@ -1,0 +1,157 @@
+# Binary insertion sort
+# 147 on Leetcode
+
+# given a list l = list()
+l = [3,5,7,1,8,2]
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+
+def getLength(head):
+    
+    cur = head
+    count = 0
+    while(cur != None):
+        cur = cur.next
+        count += 1
+    return count
+    
+    
+def get_nth_Node(head, n):   # 1,2,...,n
+    
+    cur = head
+    if n == 1:
+        return head
+    else:
+        count = 1
+        while(cur!=None and count<n):
+            cur = cur.next
+            count = count + 1
+        return cur
+
+
+# insert to prior 'node_pos' eg. 0 -> head, length -> back
+def insert_node(head, node_pos, val):
+    
+    addNode = ListNode(val)
+    cur = head
+    
+    # insert to head
+    if node_pos == 0:
+        addNode.next = head
+        return addNode
+        
+    # insert to back
+    elif node_pos == getLength(head):
+        while(cur != None):
+            prev = cur
+            cur = cur.next
+        prev.next = addNode
+        return head
+    
+    # Common situation
+    count = 1
+    while(count != node_pos):
+        cur = cur.next
+        count += 1
+    nextNode = cur.next
+    cur.next = addNode
+    addNode.next = nextNode
+    
+    # return    
+    return head
+
+        
+
+def delete_node(head, node_pos):
+
+    cur = head
+    length = getLength(head)
+    
+    # delete head
+    if node_pos == 1:
+        head = head.next
+        return head
+    
+    # delete back
+    elif node_pos == length:
+        last2Node = get_nth_Node(head, length-1)
+        last2Node.next = None
+        return head
+    
+    # Common Situation
+    cur = get_nth_Node(head, node_pos-1)
+    deleteNode = cur.next
+    nextNode = deleteNode.next
+    cur.next = nextNode
+    return head
+
+
+# O(n^2)
+def normal_insertion(head, insertNode, insertNodePos):
+    
+    head = delete_node(head, insertNodePos)
+    
+    insertNodeVal = insertNode.val
+    
+    curNode = head
+    for i in range(1, insertNodePos):
+        curNode = get_nth_Node(head, i)
+        curNodeVal = curNode.val
+        if insertNodeVal < curNodeVal:
+            head = insert_node(head, i-1, insertNodeVal)
+            return head
+            
+    head = insert_node(head, insertNodePos-1, insertNodeVal)
+    return head
+
+# O(nlogn)
+def binary_insertion(head, insertNode, insertNodePos):
+    
+    head = delete_node(head, insertNodePos)
+    
+    insertNodeVal = insertNode.val
+    
+    left = 1
+    right = insertNodePos - 1
+    
+    while(True):
+        mid = (left+right)/2
+        curNode = get_nth_Node(head, mid)
+        curNodeVal = curNode.val
+        if insertNodeVal > curNodeVal:
+            left = mid+1
+        else:
+            right = mid-1
+        if left > right:
+            head = insert_node(head, left-1, insertNodeVal)
+            return head
+
+    head = insert_node(head, insertNodePos-1, insertNodeVal)
+    return head
+    
+
+class Solution(object):
+    def insertionSortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        # Binary insertion sort
+        cur = head
+        length = getLength(head)
+        
+        for i in range(1, length):  # 0~n-1, 1~n-1
+            
+            cur = cur.next
+            cur_pos = i+1           # 2~n
+            
+            head = binary_insertion(head, cur, cur_pos)
+            head = normal_insertion(head, cur, cur_pos)
+        
+        return head
+

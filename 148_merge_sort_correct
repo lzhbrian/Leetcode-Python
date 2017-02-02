@@ -1,0 +1,152 @@
+# Binary insertion sort
+# 148 on Leetcode
+
+# a currect version without TLE
+
+
+# given a list l = list()
+l = [3,5,7,1,8,2]
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+
+def getLength(head):
+    
+    cur = head
+    count = 0
+    while(cur != None):
+        cur = cur.next
+        count += 1
+    return count
+    
+    
+def get_nth_Node(head, n):   # 1,2,...,n
+    
+    cur = head
+    if n == 1:
+        return head
+    else:
+        count = 1
+        while(cur!=None and count<n):
+            cur = cur.next
+            count = count + 1
+        return cur
+
+
+# Merge 2 linked list
+def merge(head1, l1, head2, l2):
+    
+    cur1 = head1
+    cur2 = head2
+
+    total_l = l1 + l2
+
+
+    if cur1.val < cur2.val:
+        newNode = ListNode(cur1.val)
+        head = newNode
+        cur1 = cur1.next
+        l1 -= 1
+    else:
+        newNode = ListNode(cur2.val)
+        head = newNode
+        cur2 = cur2.next
+        l2 -= 1
+
+    cur = head
+
+    while (l1 + l2 > 0):
+        if (l1 == 0):
+            cur.next = ListNode(cur2.val)
+            cur = cur.next
+            cur2 = cur2.next
+            l2 -= 1
+            continue
+        if (l2 == 0):
+            cur.next = ListNode(cur1.val)
+            cur = cur.next
+            cur1 = cur1.next
+            l1 -= 1
+            continue
+
+        if cur1.val < cur2.val:
+            newNode = ListNode(cur1.val)
+            cur.next = newNode
+            cur = cur.next
+            cur1 = cur1.next
+            l1 -= 1
+        else:
+            newNode = ListNode(cur2.val)
+            cur.next = newNode
+            cur = cur.next
+            cur2 = cur2.next
+            l2 -= 1
+
+    return head
+
+
+
+# Merge Sort using recursive
+def merge_sort(head, length):   # 1~endPos
+
+    if length == 1:
+        return head
+
+    elif length == 2:
+        node1 = head
+        node2 = node1.next
+        if node1.val > node2.val:
+            temp = node1.val
+            node1.val = node2.val
+            node2.val = temp
+        return node1
+
+    mid = length/2
+
+    head1 = merge_sort(head, mid)
+
+    head2 = get_nth_Node(head, mid+1)
+    head2 = merge_sort(head2, length-mid)
+
+    l1 = mid
+    l2 = length-mid
+
+    head = merge(head1, l1, head2, l2)
+
+    return head
+
+
+
+
+class Solution(object):
+    def sortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        # Binary insertion sort
+        cur = head
+        length = getLength(head)
+        if length == 0:
+            return head
+
+        head = merge_sort(head, length)
+        
+        return head
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
