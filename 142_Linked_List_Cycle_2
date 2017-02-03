@@ -1,0 +1,34 @@
+# 142 Linked List Cycle 2
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def detectCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        
+        try:
+            cur1 = head
+            cur2 = head
+            flag = 1
+            while (cur1 != cur2 or flag == 1):
+                flag = 0
+                cur1 = cur1.next
+                cur2 = cur2.next.next
+                
+            a = cur1
+            b = head
+            
+            while(a!=b):
+                a = a.next
+                b = b.next
+            return a
+            
+        except:
+            return None

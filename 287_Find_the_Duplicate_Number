@@ -1,0 +1,21 @@
+# 287 Find the Duplicate Number
+
+class Solution(object):
+    def findDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        
+        nums.sort()
+        
+        cur = 0
+        prev = 0
+        for n in nums:
+            prev = cur
+            cur = n
+            if prev == cur:
+                return prev
+        
+        return -1
+        

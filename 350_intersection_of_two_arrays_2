@@ -1,0 +1,41 @@
+
+# 350 Intersection of two arrays 2
+
+class Solution(object):
+    def intersect(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: List[int]
+        """
+        
+        nums1.sort()
+        nums2.sort()
+        
+        len1 = len(nums1)
+        len2 = len(nums2)
+        total_len = len1 + len2
+        
+        i = 0
+        j = 0
+        
+        ans_list = []
+        
+        while( i<len1 and j<len2 ):
+            a = nums1[i]
+            b = nums2[j]
+            if a == b:
+                ans_list.append(a)
+                i += 1
+                j += 1
+                continue
+            elif a > b:
+                j += 1 
+                continue
+            elif a < b:
+                i += 1
+                continue
+        return ans_list
+                
+                
+        

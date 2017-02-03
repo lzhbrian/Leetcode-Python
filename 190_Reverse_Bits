@@ -1,0 +1,18 @@
+# 190 Reverse Bits
+
+class Solution:
+    # @param n, an integer
+    # @return an integer
+    def reverseBits(self, n):
+        bin_n = bin(n)
+        bin_n = bin_n[2:-1] + bin_n[-1]
+        
+    	if len(bin_n) != 32:
+    		add_zero_num = 32-len(bin_n)
+    		add_zero = '0'*add_zero_num
+    		bin_n = add_zero + bin_n
+
+        bin_n = bin_n[::-1]
+        
+        return int(bin_n, 2)
+

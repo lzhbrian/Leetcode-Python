@@ -1,0 +1,26 @@
+# 260 Single Number 3
+
+# See 
+# https://discuss.leetcode.com/topic/21605/accepted-c-java-o-n-time-o-1-space-easy-solution-with-detail-explanations/2
+
+# This sol is very very slow
+class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        
+        nums_set = set(nums)
+        nums_unique_list = list(nums_set)
+        
+        for n in nums_unique_list:
+            nums.remove(n)
+        
+        print nums
+        print nums_set
+        print nums_set - set(nums)
+        ans = list( nums_set - set(nums) )
+        
+        return ans
+        

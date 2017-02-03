@@ -1,0 +1,71 @@
+# 141 Linked List Cycle
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+
+# An accepted version
+class Solution(object):
+	def hasCycle(self, head):
+		"""
+		:type head: ListNode
+		:rtype: bool
+		"""
+		
+		# None
+		if head == None:
+			return False
+		
+		# Single Node
+		if head.next == None:
+			return False
+		
+		# Two Node
+		if head.next.next == None:
+			return False
+		
+		# Else
+		cur1 = head
+		cur2 = head.next
+		
+		
+		# Floyd, traverse the Linked list in different speed
+		while (cur1 != None) and (cur2 != None):
+			if cur1 == cur2:
+				return True
+			
+			cur1 = cur1.next
+			cur2 = cur2.next
+			if cur2 != None:
+				cur2 = cur2.next
+			else:
+				return False
+
+		return False
+
+
+# A faster version with try, except
+class Solution(object):
+	def hasCycle(self, head):
+		"""
+		:type head: ListNode
+		:rtype: bool
+		"""
+
+		try:
+			cur1 = head
+			cur2 = head.next
+
+			while (cur1 != cur2):
+				cur1 = cur1.next
+				cur2 = cur2.next.next
+			return True
+
+		except:
+			return False
+
+
+		
