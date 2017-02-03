@@ -1,0 +1,59 @@
+# Greedy
+# 55 Jump game
+
+# Recursive: Exceed maximum recursion depth
+class Solution(object):
+	def my_can_jump(self, nums, index):
+		length = len(nums)
+		if index >= length-1:
+			return True
+		if index <= 0:
+			return False
+		jump_ability = nums[index]
+		if jump_ability == 0:
+			return False
+		if index + jump_ability >= length-1:
+			return True
+		nums[index] = 0
+		ans = False
+		for i in range(1,jump_ability+1):
+			ans2 = self.my_can_jump(nums, index+i)
+			ans = ans or ans2
+		return ans
+
+	def canJump(self, nums):
+		"""
+		:type nums: List[int]
+		:rtype: bool
+		"""
+		jump_ability = nums[0]
+		nums[0] = 0
+		ans = self.my_can_jump(nums, jump_ability)
+		return ans
+
+
+# Accepted: non-recursion, O(n)
+class Solution(object):
+	def canJump(self, nums):
+		"""
+		:type nums: List[int]
+		:rtype: bool
+		"""
+		length = len(nums)
+
+		minCanReach = 0
+
+		for i in range(length-1, -1, -1):
+			jump_ability = nums[i]
+			if jump_ability + i >= minCanReach:
+				minCanReach = i
+
+		return minCanReach == 0
+        
+
+
+
+
+
+
+

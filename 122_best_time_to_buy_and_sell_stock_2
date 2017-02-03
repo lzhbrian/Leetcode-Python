@@ -1,0 +1,89 @@
+# Greedy
+
+# 122 Best time to buy and sell stock 2
+
+# Accepted: calc all the peak-valley
+class Solution(object):
+	def maxProfit(self, prices):
+		"""
+		:type prices: List[int]
+		:rtype: int
+		"""
+		
+		length = len(prices)
+		if length == 0:
+			return 0
+		
+		cur_min = 0
+		cur_max = 0
+		max_profit = 0
+		prev_p = 0
+		cur_p = 0
+		index = 0
+		
+		flag = 0
+		
+		while index < length-1 :
+			
+			flag = 0
+			
+			# new session
+			cur_min = prices[index]
+			cur_max = prices[index]
+			
+			prev_p = prices[index]
+			cur_p = prices[index]
+			
+			while index < length-1 :
+				
+				index += 1
+				
+				prev_p = cur_p
+				cur_p = prices[index]
+				
+				# another session
+				if prev_p > cur_p:
+					max_profit = max_profit + (cur_max-cur_min)
+					flag = 1
+					break
+				
+				cur_max = max(cur_max, cur_p)
+		
+		# if move to last
+		if flag == 0:
+			max_profit = max_profit + (cur_max-cur_min)
+
+		return max_profit
+		
+		
+# A simpler: add cur-prev, if cur>prev
+class Solution(object):
+	def maxProfit(self, prices):
+		"""
+		:type prices: List[int]
+		:rtype: int
+		"""
+		
+		length = len(prices)
+		if length == 0:
+			return 0
+		
+		max_profit = 0
+		prev_p = prices[0]
+		cur_p = prices[0]
+		index = 0
+		
+		while index <= length-1 :
+			
+			prev_p = cur_p
+			cur_p = prices[index]
+			
+			if cur_p > prev_p:
+				max_profit += cur_p-prev_p
+
+			index += 1
+		
+		return max_profit
+
+
+
