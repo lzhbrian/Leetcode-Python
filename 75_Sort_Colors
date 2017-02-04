@@ -1,0 +1,27 @@
+# 75 Sort Colors
+
+# A possible sol
+from collections import Counter
+
+class Solution(object):
+	
+	# two pass sol
+	def sortColors(self, nums):
+		"""
+		:type nums: List[int]
+		:rtype: void Do not return anything, modify nums in-place instead.
+		"""
+		
+		c = Counter(nums)
+		ans = []
+		for i in range(0,3):
+			ans.extend([i]*c[i])
+		for i in range(0, len(nums)):
+			nums[i] = ans[i]
+
+
+# Move 0 to left, 2 to right
+
+
+
+

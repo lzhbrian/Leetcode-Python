@@ -1,0 +1,16 @@
+# 191 Number of 1 Bits
+
+class Solution(object):
+    def hammingWeight(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        bin_n = bin(n)
+        bin_n = bin_n[2:-1] + bin_n[-1]
+        
+        s = 0
+        for b in bin_n:
+            s += int(b)
+        
+        return s
