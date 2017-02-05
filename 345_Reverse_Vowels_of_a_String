@@ -1,0 +1,38 @@
+# 345 Reverse Vowels of a String
+
+class Solution(object):
+    def reverseVowels(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        length = len(s)
+        vowel_dict = {"a":1,"e":1,"i":1,"o":1,"u":1,"A":1,"E":1,"I":1,"O":1,"U":1}
+        vowel_place_dict = dict() # 3:'a', an 'a' is in 3rd place
+        
+        for i in range(0, length):
+            ss = s[i]
+            if vowel_dict.get(ss,0) == 1:
+                vowel_place_dict[i] = ss
+        
+        dict_keys = sorted(vowel_place_dict.keys())
+        reversed_vowel_place_dict_keys = dict_keys[::-1]
+        
+        # print vowel_place_dict
+        # print dict_keys
+        # print reversed_vowel_place_dict_keys
+        
+        s = list(s)
+        
+        for index in range(0, len(dict_keys)):
+            # print dict_keys[index]
+            # print reversed_vowel_place_dict_keys[index]
+            s[dict_keys[index]] = vowel_place_dict[reversed_vowel_place_dict_keys[index]]
+
+        return ''.join(s)
+        
+        
+        
+        
+        
+        

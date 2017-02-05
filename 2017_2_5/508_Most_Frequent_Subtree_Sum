@@ -1,0 +1,53 @@
+# 508 Most Frequent Subtree Sum
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+from collections import Counter
+
+class Solution(object):
+    
+    
+    def Calc_sum(self, cur, sum_list):
+        if cur != None:
+            s = cur.val
+            if cur.left != None:
+                s += cur.left.val
+                sum_list = self.Calc_sum(cur.left, sum_list)
+            if cur.right != None:
+                s += cur.right.val
+                sum_list = self.Calc_sum(cur.right, sum_list)
+
+            sum_list.append(s)
+            return sum_list
+    
+    def findFrequentTreeSum(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        
+        sum_list = []
+        
+        if root == None:
+            return []
+        
+        sum_list = self.Calc_sum(root, sum_list)
+        
+        c = Counter(sum_list)
+        k,v_most = c.most_common(1)[0]
+        
+        ans = []
+        for k,v in c.items():
+            if v == v_most:
+                ans.append(k)
+        
+        return ans
+        
+        
+            
+        

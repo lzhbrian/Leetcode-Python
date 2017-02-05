@@ -1,0 +1,50 @@
+# 500 Keyboard Row
+
+class Solution(object):
+    def findWords(self, words):
+        """
+        :type words: List[str]
+        :rtype: List[str]
+        """
+        first = list('qwertyuiop') + list('QWERTYUIOP')
+        second = list('asdfghjkl') + list('ASDFGHJKL')
+        third = list('zxcvbnm') + list('ZXCVBNM')
+        
+        # print first
+        # print second
+        # print third
+        
+        ans = []
+        
+        for word in words:
+            
+            # print word[0]
+            
+            if word[0] in first:
+                first_w_index = 1
+            elif word[0] in second:
+                first_w_index = 2
+            elif word[0] in third:
+                first_w_index = 3
+            
+            # print first_w_index
+            flag = 0
+            
+            for w in word:
+                # print w
+                if w in first:
+                    index = 1
+                elif w in second:
+                    index = 2
+                elif w in third:
+                    index = 3
+                if index != first_w_index:
+                    flag = 1
+                    break
+            
+            if flag == 0:
+                ans.append(word)
+                
+        return ans
+                
+            

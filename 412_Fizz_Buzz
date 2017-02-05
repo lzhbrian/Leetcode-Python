@@ -1,0 +1,26 @@
+# 412 Fizz Buzz
+
+class Solution(object):
+    def fizzBuzz(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        fizz = 'Fizz'
+        buzz = 'Buzz'
+        fizzbuzz = 'FizzBuzz'
+        
+        ans = []
+        
+        for i in range(0,n):
+            nn = i + 1
+            if nn%15==0:
+                ans.append(fizzbuzz)
+            elif nn%3==0:
+                ans.append(fizz)
+            elif nn%5==0:
+                ans.append(buzz)
+            else:
+                ans.append(str(nn))
+        
+        return ans
