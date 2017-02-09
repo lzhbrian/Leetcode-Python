@@ -1,0 +1,54 @@
+# 501 Find Mode in Binary Search Tree
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+import operator
+
+
+
+class Solution(object):
+    
+    def find_max_mode(self, x, root):
+        
+        # update dict x
+        cnt = x.get(root.val,0)
+        cnt += 1
+        x[root.val] = cnt
+        
+        if root.left != None:
+            x = self.find_max_mode(x, root.left)
+        if root.right != None:
+            x = self.find_max_mode(x, root.right)
+        return x
+    
+    
+    def findMode(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        if root == None:
+            return []
+        
+        x = dict()
+        
+        x = self.find_max_mode(x, root)
+        
+        max_val = max(x.values())
+        return [k for k,v in x.items() if v == max_val]
+        
+        # # Sort by values:
+        # # x = {1: 2, 3: 4, 4: 3, 2: 1, 0: 0}
+        # sorted_x = sorted(x.items(), key=operator.itemgetter(1),reverse=True)
+        
+        # ans = []
+        # max_val = list(sorted_x[0])[1]
+        # for k, v in sorted_x:
+        #     if v < max_val:
+        #         break
+        #     ans.append(k)
+        
+        # return ans

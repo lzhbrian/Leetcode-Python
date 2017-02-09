@@ -1,0 +1,29 @@
+# 292 Nim Game
+
+# WTF
+class Solution(object):
+    def canWinNim(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        return bool(n%4)
+
+
+# A TLE version
+class Solution(object):
+    def my_canwin(self, n):
+        if 0 < n <= 3 or n == 5:
+            return True
+        if n == 4 or n ==0:
+            return False
+            
+        return ( (not self.my_canwin(n-3)) or (not self.my_canwin(n-2)) or (not self.my_canwin(n-1)) )
+        
+    
+    def canWinNim(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        return self.my_canwin(n)

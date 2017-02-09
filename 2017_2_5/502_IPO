@@ -1,52 +1,102 @@
 # 502. IPO
 
+# passed sol
+class Solution(object):
+
+	def findMaximizedCapital(self, k, W, Profits, Capital):
+		"""
+		:type k: int
+		:type W: int
+		:type Profits: List[int]
+		:type Capital: List[int]
+		:rtype: int
+		"""
+		
+		P_C_dict = dict()
+		length = len(Profits)
+		
+		if length == 0:
+			return 0
+		
+		P_C_list = []
+		
+		for i in range(0,length):
+			p = Profits[i]
+			c = Capital[i]
+			P_C_list.append((p,c))
+		
+		P_C_list = sorted(P_C_list, key=lambda x: x[0], reverse=True) # According to Profit from big to small
+		
+		profit = 0
+		W_init = W
+
+		while True:
+			flag = 0
+			for proj in P_C_list:
+				p,c = proj
+				if W >= c:
+					W = W+p
+					P_C_list.remove( proj )
+					k = k -1
+					profit += p
+					flag = 1
+					break
+
+			if k>0 and P_C_list!=[] and flag==1:
+				continue
+			else:
+				break
+		
+		return profit+W_init
+
+
 # An exceed maximum recursion sol
 class Solution(object):
-    
-    def my_sol(self, k, W, P_C_list):
-        if k == 0 or P_C_list==[]:
-            return 0
-        for proj in P_C_list:
-            p,c = proj
-            if W >= c:
-                W = W+p
-                P_C_list.remove( (p,c) )
-                k = k -1
-                
-                profit = 0
-                if k > 0 and P_C_list != []:
-                    profit = p + self.my_sol(k, W, P_C_list)
-                else:
-                    profit = p
-                return profit
-        
-        return 0
-    
-    def findMaximizedCapital(self, k, W, Profits, Capital):
-        """
-        :type k: int
-        :type W: int
-        :type Profits: List[int]
-        :type Capital: List[int]
-        :rtype: int
-        """
-        
-        P_C_dict = dict()
-        length = len(Profits)
-        
-        if length == 0:
-            return 0
-        
-        P_C_list = []
-        
-        for i in range(0,length):
-            p = Profits[i]
-            c = Capital[i]
-            P_C_list.append((p,c))
-        
-        P_C_list = sorted(P_C_list, key=lambda x: x[0], reverse=True) # According to Profit from big to small
-        
-        profit = self.my_sol(k, W, P_C_list)
-        return profit
-        
-        
+	
+	def my_sol(self, k, W, P_C_list):
+		if k == 0 or P_C_list==[]:
+			return 0
+		for proj in P_C_list:
+			p,c = proj
+			if W >= c:
+				W = W+p
+				P_C_list.remove( (p,c) )
+				k = k -1
+				
+				profit = 0
+				if k > 0 and P_C_list != []:
+					profit = p + self.my_sol(k, W, P_C_list)
+				else:
+					profit = p
+				return profit
+		
+		return 0
+	
+	def findMaximizedCapital(self, k, W, Profits, Capital):
+		"""
+		:type k: int
+		:type W: int
+		:type Profits: List[int]
+		:type Capital: List[int]
+		:rtype: int
+		"""
+		
+		P_C_dict = dict()
+		length = len(Profits)
+		
+		if length == 0:
+			return 0
+		
+		P_C_list = []
+		
+		for i in range(0,length):
+			p = Profits[i]
+			c = Capital[i]
+			P_C_list.append((p,c))
+		
+		P_C_list = sorted(P_C_list, key=lambda x: x[0], reverse=True) # According to Profit from big to small
+		
+		profit = self.my_sol(k, W, P_C_list)
+		return profit
+		
+		
