@@ -1,0 +1,46 @@
+# 222 Count Complete Tree Nodes
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    
+    def get_left_depth(self, root):
+        
+        depth = 0
+        while root:
+            root = root.left
+            depth += 1
+        return depth
+        
+    def get_right_depth(self, root):
+        
+        depth = 0
+        while root:
+            root = root.right
+            depth += 1
+        return depth
+    
+    def countNodes(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        
+        if not root:
+            return 0
+        
+        left_depth = self.get_left_depth(root)
+        right_depth = self.get_right_depth(root)
+        if left_depth == right_depth:
+            return 2**left_depth - 1
+        
+        else:
+            return self.countNodes(root.left) + self.countNodes(root.right) + 1
+        
+        
+        

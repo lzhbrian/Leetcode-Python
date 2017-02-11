@@ -1,0 +1,34 @@
+# 389 Find the Difference
+
+# An AC sol, but slow
+class Solution(object):
+	def findTheDifference(self, s, t):
+		"""
+		:type s: str
+		:type t: str
+		:rtype: str
+		"""
+		t = list(t)
+		s = list(s)
+		for ss in s:
+			t.remove(ss)
+		return t[0]
+	
+# A faster sol
+class Solution(object):
+    def findTheDifference(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: str
+        """
+        su = 0
+        for c in s+t:
+            ind = ord(c)
+            su ^= ind
+        return chr(su)
+
+
+
+
+
