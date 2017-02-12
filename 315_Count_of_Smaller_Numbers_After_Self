@@ -1,0 +1,58 @@
+# 315 Count of Smaller Numbers After Self
+
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+        
+        self.less = 0
+        self.same = 1
+
+
+class Solution(object):
+
+
+    # return less
+    def insert(self, val, root):
+
+        if root.val == val:
+            root.same += 1
+            return root.less
+            
+        elif val < root.val:
+            root.less += 1
+            if root.left:
+                return self.insert(val, root.left)
+            else:
+                root.left = Node(val)
+                root.left.less = 0
+                return root.left.less
+
+        elif val > root.val:
+            if root.right:
+                return root.same + root.less + self.insert(val, root.right)
+            else:
+                root.right = Node(val)
+                return root.same + root.less
+
+        elif not root:
+            return 0
+
+    
+    def countSmaller(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        length = len(nums)
+        if length == 0:
+            return []
+        
+        # for i in range(length-1, -1, -1):
+        tree = Node(nums[-1])
+        
+        a = [0] + [ self.insert(nums[i], tree) for i in range(length-2, -1, -1) ]
+        # print a[::-1]
+        return a[::-1]
+            

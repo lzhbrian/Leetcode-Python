@@ -1,0 +1,48 @@
+# 515 Find Largest Element in Each Row
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+
+    def pure_bfs(self, root):
+        
+        list_exp = [root.val]
+        
+        this_layer = [root]
+        while True:
+            will_append = []
+            next_layer = []
+            for t in this_layer:
+                if t.left == None:
+                    will_append.append(None)
+                else:
+                    next_layer.append(t.left)
+                    will_append.append(t.left.val)
+                if t.right == None:
+                    will_append.append(None)
+                else:
+                    next_layer.append(t.right)
+                    will_append.append(t.right.val)
+                
+            if will_append != len(will_append)*[None] :
+                list_exp.append(max(will_append))
+            else:
+                return list_exp
+
+            this_layer = next_layer
+        return list_exp
+
+    # def largestValues(self,root):
+    def findValueMostElement(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        if root:
+            return self.pure_bfs(root)
+        return [] 

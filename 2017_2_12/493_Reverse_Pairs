@@ -1,0 +1,93 @@
+# 493 Reverse Pairs
+
+
+# Using python bisect
+
+import bisect
+class Solution(object):
+    def reversePairs(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+
+        if nums:
+            length = len(nums)
+            ll = [nums[-1]]
+            addnum = 0
+            for i in range(length-2, -1, -1):
+                n = nums[i]
+                addnum = addnum + bisect.bisect_left(ll, n/2.0)
+                bisect.insort(ll,n)
+                # ll.insert(bisect.bisect_left(ll, n), n)
+            # print ll
+            return addnum
+            
+        return 0
+
+
+
+# A TLE, BST sol...
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+        
+        self.less = 0 # num of nodes in leftSubTree
+        self.same = 1
+
+
+class Solution(object):
+
+
+    # serach, return smaller num
+    def search(self, val, root):
+        if not root:
+            return 0
+        if root.val == val:
+            return root.less
+        elif val > root.val:
+            return root.same + root.less + self.search(val, root.right)
+        elif val < root.val:
+            return self.search(val, root.left)
+
+
+    # return less
+    def insert(self, val, root):
+
+        if root.val == val:
+            root.same += 1
+        elif val < root.val:
+            root.less += 1
+            if root.left:
+                self.insert(val, root.left)
+            else:
+                root.left = Node(val)
+        elif val > root.val:
+            if root.right:
+                self.insert(val, root.right)
+            else:
+                root.right = Node(val)
+
+    def reversePairs(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        length = len(nums)
+        if length == 0:
+            return 0
+        
+        tree = Node(nums[-1])
+        a = [0]
+
+        for i in range(length-2, -1, -1):
+            a.append(self.search(nums[i]/float(2), tree))
+            self.insert(nums[i], tree)
+
+        print a[::-1]
+        return sum(a)
+            
+
+        

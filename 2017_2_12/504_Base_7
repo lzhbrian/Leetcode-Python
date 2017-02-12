@@ -1,0 +1,33 @@
+# 504 Base 7
+
+import math
+
+class Solution(object):
+    def convertTo7(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        
+        ans = 0
+        
+        if num > 0:
+            synbol = 1
+        elif num == 0:
+            return "0"
+        else:
+            synbol = -1
+        
+        num = abs(num)
+        up = int(math.floor(math.log(num,7)))
+        
+        for x in range(up,-1,-1):
+            seven_n = 7**x
+            a = num/seven_n
+            num = num - a*seven_n
+            ans = ans + a*(10**x)
+        
+        return str(ans*synbol)
+        
+        
+        

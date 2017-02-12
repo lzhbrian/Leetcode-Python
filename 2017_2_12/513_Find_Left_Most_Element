@@ -1,0 +1,58 @@
+# 513. Find Left Most Element
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+
+	def maxDepth(self, root):
+		"""
+		:type root: TreeNode
+		:rtype: int
+		"""
+		if not root:
+			return 0
+		if (not root.left and not root.right):
+			return 1
+		
+		left = right = 0
+		
+		if root.left:
+			left = self.maxDepth(root.left) + 1
+		if root.right:
+			right = self.maxDepth(root.right) + 1
+		
+		return max(left,right)
+
+	def myLeftMost(self, root, curDepth, maxDepth):
+		a = None
+		if curDepth == maxDepth:
+			a = root.val
+		else:
+			curDepth += 1
+			if root.left:
+				a = self.myLeftMost(root.left, curDepth, maxDepth)
+			if a == None and root.right:
+				a = self.myLeftMost(root.right, curDepth, maxDepth)
+# 		print a
+		return a
+
+	def findLeftMostNode(self, root):
+		"""
+		:type root: TreeNode
+		:rtype: int
+		"""
+		maxDepth = self.maxDepth(root)
+# 		print maxDepth
+		curDepth = 1
+		
+		return self.myLeftMost(root, curDepth, maxDepth)
+		
+		
+		
+		
+		
