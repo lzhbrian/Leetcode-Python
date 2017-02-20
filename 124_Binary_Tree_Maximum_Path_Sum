@@ -1,0 +1,36 @@
+# 124 Binary Tree Maximum Path Sum
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    
+    def maxPathSum(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root:
+            curmax = -300000000000000
+            curmax = self.helper(root, curmax)[0]
+            return curmax
+        return 0
+
+    # return curmax, maxPathDown
+    def helper(self, root, curmax):
+        
+        if not root:
+            return curmax, 0
+        else:
+            curmax, left = self.helper(root.left, curmax)
+            curmax, right = self.helper(root.right, curmax)
+            leftmax = max(0, left)
+            rightmax = max(0, right)
+            curmax = max( curmax, leftmax+rightmax+root.val )
+            return curmax, max(leftmax, rightmax)+root.val
+
+

@@ -1,0 +1,36 @@
+# 257 Binary Tree Paths
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def binaryTreePaths(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[str]
+        """
+        return self.helper(root, [], [])
+        
+    def convertToStr(self, lists):
+        ans = ''
+        strlist = []
+        for l in lists:
+            strlist.append(str(l))
+        return '->'.join(strlist)
+    
+    def helper(self, root, lists, ans):
+        
+        if root:
+            l = lists[:]
+            l.append(root.val)
+            if not root.left and not root.right:
+                ans.append(self.convertToStr(l))
+            ans = self.helper(root.left, l, ans)
+            ans = self.helper(root.right, l, ans)
+        return ans
+        
+        

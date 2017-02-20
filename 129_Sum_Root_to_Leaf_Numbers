@@ -1,0 +1,28 @@
+# 129 Sum Root to Leaf Numbers
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def sumNumbers(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        return self.helper(root, '', 0)
+        
+    def helper(self, root, string, ans):
+        if root:
+            string = string + str(root.val)
+            if not root.left and not root.right:
+                ans += int(string)
+            ans = self.helper(root.left, string, ans)
+            ans = self.helper(root.right, string, ans)
+        return ans
+        
+        
+        

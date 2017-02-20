@@ -1,0 +1,19 @@
+# 492 Construct the Rectangle
+
+import math
+
+class Solution(object):
+    def constructRectangle(self, area):
+        """
+        :type area: int
+        :rtype: List[int]
+        """
+        sqrt_area = int(math.sqrt(area))
+        s = sqrt_area
+        
+        while s >= 1:
+            if area%s == 0:
+                return [area/s,s]
+            s -= 1
+        
+        
