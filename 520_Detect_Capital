@@ -1,0 +1,14 @@
+# 520. Detect Capital
+
+class Solution(object):
+    def detectCapitalUse(self, word):
+        """
+        :type word: str
+        :rtype: bool
+        """
+        if len(word) == 0:
+            return True
+        w = str(word)
+        if w == word.upper() or w[1:] == word[1:].lower():
+            return True
+        return False

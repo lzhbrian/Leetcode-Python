@@ -1,0 +1,32 @@
+# 6 ZigZag Conversion
+        
+class Solution(object):
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+
+        
+        if numRows == 1:
+            return s
+        cur = 0
+        mode = 1 # 1:down(+), -1:up(-)
+        
+        row = ['']*numRows
+        
+        for ss in s:
+            if mode == 1:
+                cur += 1
+                if cur == numRows:
+                    mode = -mode
+            elif mode == -1:
+                cur -= 1
+                if cur == 1:
+                    mode = -mode
+            row[cur-1] += ss
+        
+        return ''.join(row)
+        
+                

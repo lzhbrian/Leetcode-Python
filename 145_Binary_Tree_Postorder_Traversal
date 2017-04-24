@@ -1,0 +1,55 @@
+# 145. Binary Tree Postorder Traversal
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def postorder_iter(self, root, ans):
+        if not root:
+            return
+        self.postorder_iter(root.left, ans)
+        self.postorder_iter(root.right, ans)
+        ans.append(root.val)
+    
+    # reverse a right-tree-first preorder
+    def postorder_for_1(self, root, ans):
+        if not root:
+            return
+        p = root
+        s = list()
+        while p or s:
+            while p:
+                s.append(p)
+                ans.append(p.val)
+                p = p.right
+            if s:
+                p = s.pop()
+                p = p.left
+        
+    # visited flag
+    def postorder_for_2(self, root, ans):
+        
+        
+        
+        
+
+    def postorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        ans = list()
+        # self.postorder_iter(root, ans)
+        
+        ## reverse a right-tree-first preorder
+        # self.postorder_for_1(root, ans)
+        # ans = ans[::-1]
+        
+        # visited flag
+        self.postorder_for_2(root, ans)
+        
+        return ans
